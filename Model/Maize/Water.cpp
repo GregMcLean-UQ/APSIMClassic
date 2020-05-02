@@ -100,6 +100,7 @@ void Water::readParams (void)
    {
    swPhenoTable.read(    scienceAPI,"x_sw_avail_ratio", "y_swdef_pheno");
    swExpansionTable.read(scienceAPI,"x_sw_demand_ratio","y_swdef_leaf");
+   //swSilkExpansionTable.read(scienceAPI, "x_silk_sw_demand_ratio", "y_swdef_leaf");
 
    scienceAPI.read("kl", "", 0, kl);
    scienceAPI.read("xf", "", 0, xf);

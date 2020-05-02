@@ -184,7 +184,7 @@ namespace Maize {
          // public Methods -------------------------------------------------------
       public:
          GrainCM(ScienceAPI2 &api, Plant *p);
-         ~GrainCM();
+         virtual ~GrainCM();
          void  readParams (void);
          virtual void  updateVars(void);
          virtual void  process(void);
@@ -193,8 +193,8 @@ namespace Maize {
          // biomass
          void  calcDemandStress(void);
          virtual void  calcBiomassDemand(void);
-         virtual double  dmRetrans(double dltDm);
-         void  doRegistrations(void);
+         virtual void  dmRetrans(double dltDm);
+         virtual void  doRegistrations(void);
 
          // phenology
          virtual void  phenologyEvent(int);
@@ -205,7 +205,6 @@ namespace Maize {
          double getNConc(void)const{return nConc;}
          
          // phosphorus
-         double calcPRetransDemand(void);
          double getPConc(void)const{return pConc;}
 
          int   getNCohorts(void)const{return nCohorts;}

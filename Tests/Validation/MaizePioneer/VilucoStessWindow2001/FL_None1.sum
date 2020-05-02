@@ -9,7 +9,7 @@
  The Agricultural Production Systems Simulator
              Copyright(c) APSRU               
 
-Version                = 7.10 rb5563883a5f58f220eb5237990ed63106eee498e
+Version                = 7.10 raca065eb14a00c0fb2fe3bf5a3eccf978daa03fd
 Title                  = FL_None1
    Component                        "clock" = %apsim%\Model\Clock.dll
    Component                          "met" = %apsim%\Model\Input.dll
@@ -31,6 +31,9 @@ Paddock:
    Component         "SurfaceOrganicMatter" = %apsim%\Model\SurfaceOM.dll
    Component              "Viluco Nitrogen" = %apsim%\Model\SoilN.dll
    Component                        "maize" = %apsim%\Model\Maize.dll
+maize: 
+     Grain Abortion Method initiated
+     Grain Abortion Method initiated
 
 ------- clock Initialisation --------------------------------------------------
      Sequencer phases:
@@ -473,7 +476,9 @@ Paddock:
          -------------------------------------------------------
      
       - reading constants for plant(maize) - pioneer_3394
-         tt_emerg_to_endjuv       =  220.00
+         tt_emerg_to_endjuv       =  100.00
+         tt_endjuv_to_init        =  220.00
+         tt_init_to_flower        =   50.00
          tt_flower_to_maturity    =  911.00
          tt_flag_to_flower        =    0.00
          tt_flower_to_start_grain =  170.00
@@ -516,13 +521,13 @@ Paddock:
 8 November 2001(Day of year=312), maize: 
      Stage 2 Germination  DAS = 1
      		Biomass       =   0.00 		 LAI            =   0.00
-     		Stover N Conc =   0.00 		 Extractable SW =   0.00
+     		Stover N Conc =   0.00 		 Extractable SW =   8.00
 12 November 2001(Day of year=316), paddock.Operations Schedule: 
       Sending apply message to irrigation
-13 November 2001(Day of year=317), maize: 
-     Stage 3 Emergence  DAS = 6
+12 November 2001(Day of year=316), maize: 
+     Stage 3 Emergence  DAS = 5
      		Biomass       =   0.00 		 LAI            =   0.00
-     		Stover N Conc =   0.00 		 Extractable SW =  16.38
+     		Stover N Conc =   0.00 		 Extractable SW =  15.01
 16 November 2001(Day of year=320), paddock.Operations Schedule: 
       Sending apply message to irrigation
 17 November 2001(Day of year=321), paddock.Operations Schedule: 
@@ -531,8 +536,8 @@ Paddock:
       Sending apply message to irrigation
 21 November 2001(Day of year=325), maize: 
      Stage 4 EndOfJuvenile  DAS = 14
-     		Biomass       =   1.79 		 LAI            =   0.03
-     		Stover N Conc =   0.22 		 Extractable SW =  37.46
+     		Biomass       =   2.89 		 LAI            =   0.05
+     		Stover N Conc =   0.34 		 Extractable SW =  38.29
 23 November 2001(Day of year=327), paddock.Operations Schedule: 
       Sending apply message to irrigation
 26 November 2001(Day of year=330), paddock.Operations Schedule: 
@@ -545,10 +550,10 @@ Paddock:
       Sending apply message to irrigation
 8 December 2001(Day of year=342), paddock.Operations Schedule: 
       Sending apply message to irrigation
-11 December 2001(Day of year=345), maize: 
-     Stage 5 FloralInitiation  DAS = 34
-     		Biomass       =  62.29 		 LAI            =   0.45
-     		Stover N Conc =   4.04 		 Extractable SW = 121.02
+10 December 2001(Day of year=344), maize: 
+     Stage 5 FloralInitiation  DAS = 33
+     		Biomass       =  75.70 		 LAI            =   0.55
+     		Stover N Conc =   4.57 		 Extractable SW = 119.42
 12 December 2001(Day of year=346), paddock.Operations Schedule: 
       Sending apply message to irrigation
 16 December 2001(Day of year=350), paddock.Operations Schedule: 
@@ -562,7 +567,7 @@ Paddock:
 1 January 2002(Day of year=1), paddock.Operations Schedule: 
       Sending apply message to irrigation
 1 January 2002(Day of year=1), paddock.Fertilise on fixed date: 
-     Manager creating a new local real variable : n_topsoil = 337.59998
+     Manager creating a new local real variable : n_topsoil = 309.53748
      Manager sending message :- fertiliser apply  amount = 350 (kg/ha), depth = 50 (mm), type = urea_n
 1 January 2002(Day of year=1), Fertiliser: 
      
@@ -579,12 +584,12 @@ Paddock:
       Sending apply message to irrigation
 20 January 2002(Day of year=20), maize: 
      Stage 6 FlagLeaf  DAS = 74
-     		Biomass       = 1142.80 		 LAI            =   5.89
-     		Stover N Conc =  38.37 		 Extractable SW = 207.21
+     		Biomass       = 1227.65 		 LAI            =   5.96
+     		Stover N Conc =  36.81 		 Extractable SW = 202.87
 21 January 2002(Day of year=21), maize: 
      Stage 7 Flowering  DAS = 75
-     		Biomass       = 1188.26 		 LAI            =   5.99
-     		Stover N Conc =  39.64 		 Extractable SW = 197.70
+     		Biomass       = 1272.59 		 LAI            =   5.96
+     		Stover N Conc =  37.91 		 Extractable SW = 193.41
 25 January 2002(Day of year=25), paddock.Operations Schedule: 
       Sending apply message to irrigation
 28 January 2002(Day of year=28), paddock.Operations Schedule: 
@@ -597,8 +602,48 @@ Paddock:
       Sending apply message to irrigation
 4 February 2002(Day of year=35), maize: 
      Stage 8 StartGrainFill  DAS = 89
-     		Biomass       = 1750.18 		 LAI            =   5.99
-     		Stover N Conc =  55.06 		 Extractable SW = 205.43
+     		Biomass       = 1807.13 		 LAI            =   5.96
+     		Stover N Conc =  52.34 		 Extractable SW = 205.78
+5 February 2002(Day of year=36), maize: 
+     Stage 11 HarvestRipe  DAS = 90
+     		Biomass       = 1845.87 		 LAI            =   5.96
+     		Stover N Conc =  53.33 		 Extractable SW = 196.07
+5 February 2002(Day of year=36), paddock.Harvesting rule: 
+     Manager sending message :- maize harvest
+     
+     Harvest
+     Flowering (DAS)       = 75 		 Maturity (DAS)          = 
+     Flowering day         = 21 		 Maturity day            = 
+     Maximum LAI           = 6.0 		 Number of leaves        = 19.8
+     Total above ground biomass    (kg/ha) = 18458.7
+     Green above ground biomass    (kg/ha) = 18458.7
+     Senesced above ground biomass (kg/ha) = 0.0
+     Stover (kg/ha)        = 12996.0 	 Grain yield (kg/ha)     = 5462.7
+     Grain % water content = 15.5 		 Grain yield wet (kg/ha) = 6464.7
+     Weight 1000 grains(g) = 0.0 		 Grains/m^2              = 0.0
+     Grains/head           = 0.0
+     Grain N percent    (%)     =      0.00 	 Grain N            (kg/ha) =     0.00
+     Total N content    (kg/ha) =    535.75 	 Senesced N content (kg/ha) =     3.65
+     Green N content    (kg/ha) =    591.91
+     
+     Average Stress Indices:                          Water Photo  Water Expan  N Photo
+        Emergence           to End of juvenile           1.0          1.0        1.0
+        End of juvenile     to Floral initiation         1.0          1.0        1.0
+        Floral initiation   to Flag leaf                 1.0          0.9        1.0
+        Flag leaf           to Flowering                 0.9          0.8        1.0
+        Flowering           to Start grain fill          0.9          0.7        1.0
+        Start grain fill    to End grain fill            0.8          0.6        0.8
+     
+     Crop harvested.
+        Organic matter removed from system:-      From Tops		From Roots
+                         DM (kg/ha) =               5462.70		    0.00
+                         N  (kg/ha) =                  0.00		    0.00
+     Manager sending message :- maize end_crop
+     Crop ended.
+     Organic matter from crop:-      Tops to surface residue	 Roots to soil FOM
+                         DM (kg/ha) =              12995.97		 5642.36
+                         N  (kg/ha) =                535.75		   59.81
+                         P  (kg/ha) =                  0.00		    0.00
 6 February 2002(Day of year=37), paddock.Operations Schedule: 
       Sending apply message to irrigation
 7 February 2002(Day of year=38), paddock.Operations Schedule: 
@@ -619,13 +664,6 @@ Paddock:
       Sending apply message to irrigation
 6 March 2002(Day of year=65), paddock.Operations Schedule: 
       Sending apply message to irrigation
-7 March 2002(Day of year=66), paddock.Logic: 
-     Manager sending message :- fertiliser apply  amount = 200, type = no3_n, depth = 50
-7 March 2002(Day of year=66), Fertiliser: 
-     
-   - Reading Fertiliser Type Parameters
-       200.00 of N as nitrate (no3_n)
-                                         added at depth   50.00 (layer   1)
 10 March 2002(Day of year=69), paddock.Operations Schedule: 
       Sending apply message to irrigation
 14 March 2002(Day of year=73), paddock.Operations Schedule: 
@@ -642,61 +680,6 @@ Paddock:
       Sending apply message to irrigation
 2 April 2002(Day of year=92), paddock.Operations Schedule: 
       Sending apply message to irrigation
-6 April 2002(Day of year=96), maize: 
-     Stage 9 EndGrainFill  DAS = 150
-     		Biomass       = 3793.90 		 LAI            =   5.77
-     		Stover N Conc =  62.41 		 Extractable SW = 149.31
-11 April 2002(Day of year=101), maize: 
-     Stage 10 Maturity  DAS = 155
-     		Biomass       = 3920.17 		 LAI            =   5.77
-     		Stover N Conc =  62.27 		 Extractable SW = 132.40
-12 April 2002(Day of year=102), maize: 
-     Stage 11 HarvestRipe  DAS = 156
-     		Biomass       = 3936.22 		 LAI            =   5.77
-     		Stover N Conc =  62.16 		 Extractable SW = 130.78
-12 April 2002(Day of year=102), paddock.Harvesting rule: 
-     Manager sending message :- maize harvest
-     
-     Harvest
-     Flowering (DAS)       = 75 		 Maturity (DAS)          = 155
-     Flowering day         = 21 		 Maturity day            = 101
-     Maximum LAI           = 6.0 		 Number of leaves        = 19.8
-     Total above ground biomass    (kg/ha) = 39568.9
-     Green above ground biomass    (kg/ha) = 39413.8
-     Senesced above ground biomass (kg/ha) = 155.1
-     Stover (kg/ha)        = 20113.5 	 Grain yield (kg/ha)     = 19455.4
-     Grain % water content = 15.5 		 Grain yield wet (kg/ha) = 23024.1
-     Weight 1000 grains(g) = 308.3 		 Grains/m^2              = 5220.0
-     Grains/head           = 580.0
-     Grain N percent    (%)     =      1.62 	 Grain N            (kg/ha) =   314.70
-     Total N content    (kg/ha) =    938.26 	 Senesced N content (kg/ha) =     5.12
-     Green N content    (kg/ha) =    628.42
-     
-     Average Stress Indices:                          Water Photo  Water Expan  N Photo
-        Emergence           to End of juvenile           1.0          1.0        0.9
-        End of juvenile     to Floral initiation         1.0          1.0        1.0
-        Floral initiation   to Flag leaf                 1.0          0.9        1.0
-        Flag leaf           to Flowering                 0.9          0.7        1.0
-        Flowering           to Start grain fill          0.9          0.7        1.0
-        Start grain fill    to End grain fill            1.0          0.9        1.0
-     
-     Crop harvested.
-        Organic matter removed from system:-      From Tops		From Roots
-                         DM (kg/ha) =              19746.82		    0.00
-                         N  (kg/ha) =                314.70		    0.00
-     Manager sending message :- maize end_crop
-     Crop ended.
-     Organic matter from crop:-      Tops to surface residue	 Roots to soil FOM
-                         DM (kg/ha) =              19822.10		 4985.84
-                         N  (kg/ha) =                623.56		    9.97
-                         P  (kg/ha) =                  0.00		    0.00
-15 May 2002(Day of year=135), paddock.Logic: 
-     Manager sending message :- fertiliser apply  amount = 200, type = no3_n, depth = 50
-15 May 2002(Day of year=135), Fertiliser: 
-     
-   - Reading Fertiliser Type Parameters
-       200.00 of N as nitrate (no3_n)
-                                         added at depth   50.00 (layer   1)
 30 June 2002(Day of year=181), clock: 
      Simulation is terminating due to end criteria being met.
 

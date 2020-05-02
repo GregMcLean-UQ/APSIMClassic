@@ -15,6 +15,7 @@ StemCM::StemCM(ScienceAPI2 &api, Plant *p) : Stem(api, p)
 //--------------------------------------------------------------------------------------------------
 void StemCM::doRegistrations(void)
    {
+      Stem::doRegistrations();
    }
 //------------------------------------------------------------------------------------------------
 //------- Initialize variables

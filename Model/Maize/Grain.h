@@ -52,47 +52,47 @@ namespace Maize {
 			double tempFactor;
 
          // Private Methods -------------------------------------------------------
-         void   doRegistrations(void);
-         void   initialize(void);
-         double calcGrainNumber(void);
-         void   calcBiomassDemand(void);
-         double calcTempFactor(void);
+         virtual void   doRegistrations(void);
+         virtual void   initialize(void);
+         virtual double calcGrainNumber(void);
+         virtual void   calcBiomassDemand(void);
+         virtual double calcTempFactor(void);
    
 
          // public Methods -------------------------------------------------------
       public:
          Grain(ScienceAPI2 &, Plant *p);
-         ~Grain();
+         virtual ~Grain();
 
          // plant
-         void  readParams (void);
-         void  updateVars(void);
-         void  process(void);
+         virtual void  readParams (void);
+         virtual void  updateVars(void);
+         virtual void  process(void);
 
          // nitrogen
-         double calcNDemand(void);
-         void  RetranslocateN(double N);
+         virtual double calcNDemand(void);
+         virtual void  RetranslocateN(double N);
 
          // biomass
-         double partitionDM(double dltDM);
-         double grainDMDifferential(void);
-         void   dmRetrans(double dltDm){dmRetranslocate = dltDm;}
-         void   Harvest(void);
+         virtual double partitionDM(double dltDM);
+         virtual double grainDMDifferential(void);
+         virtual void   dmRetrans(double dltDm){dmRetranslocate = dltDm;}
+         virtual void   Harvest(void);
 
          // nitrogen
-         double getNConc(void)const{return nConc;}
+         virtual double getNConc(void)const{return nConc;}
 
          // phosphorus
-         double calcPDemand(void);
-         double calcPRetransDemand(void);
-         double getPConc(void)const{return pConc;}
+         virtual double calcPDemand(void);
+         virtual double calcPRetransDemand(void);
+         virtual double getPConc(void)const{return pConc;}
 		 virtual double getGRFract(void) { return 0; } //cohort
 
          // phenology
-         void  phenologyEvent(int);
+         virtual void  phenologyEvent(int);
 		 virtual double calcDltCDemand(double dailyBiom) { return 0; }; //cohort
 
-         void  Summary(void);
+         virtual void  Summary(void);
       };
    }
 #endif

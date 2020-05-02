@@ -79,7 +79,7 @@ void GrainCM::readParams (void)
 //------------------------------------------------------------------------------------------------
 void GrainCM::initialize(void)
    {
-   Grain::initialize();
+//   Grain::initialize(); base called in constructor
 
    grainWeight = 0.0;      // added by zhanshan, April 11, 2007
    addGrainWeight = -1;
@@ -113,7 +113,8 @@ void GrainCM::initialize(void)
 //------------------------------------------------------------------------------------------------
 void GrainCM::doRegistrations(void)
    {
-   Grain::doRegistrations();
+   // Grain::doRegistrations(); base called in constructor
+
    // Pioneer Cohort
    scienceAPI.expose("silkNumber", "silks/plant", "Silk Number", false, silkNumber);
    scienceAPI.expose("nCohorts", "", "Number of cohorts", false,nCohorts);
@@ -693,12 +694,12 @@ double GrainCM::calcDMGrainSourceSink(void)
    }
 
 //------------------------------------------------------------------------------------------------
-double GrainCM::dmRetrans(double dltDM)
+void GrainCM::dmRetrans(double dltDM)
    {
    dmRetranslocate =  dltDM;
    if (dmRetranslocate >= 0)
       partition2Cohorts(dmRetranslocate * (1 - kernelCobRatio) );
-   return 0;
+   //return 0;
    }
 //------------------------------------------------------------------------------------------------
 void  GrainCM::Harvest(void)
