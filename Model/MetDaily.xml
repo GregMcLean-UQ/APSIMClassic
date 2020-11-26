@@ -1,0 +1,31 @@
+<Type name="metdaily">
+   <MetaData>
+      <UItype>CSUserInterface.EmptyUI</UItype>
+      <ApsimXCompatible>Yes</ApsimXCompatible>	  
+      <ShowInMainTree>Yes</ShowInMainTree>
+      <Image>%apsim%\UserInterface\Images\banner2.jpg</Image>
+      <Documentation>%apsim%\Documentation\4 Module Reference\Manager.htm</Documentation>
+      <LargeIcon>%apsim%\UserInterface\Images\user1-32.png</LargeIcon>
+      <SmallIcon>%apsim%\UserInterface\Images\user1-16.png</SmallIcon>
+      <dll>%apsim%\Model\MetDaily.dll</dll>
+      <drops>
+         <drop>toolbox</drop>
+         <drop>area</drop>
+         <drop>simulation</drop>
+         <drop>folder</drop>
+      </drops>
+      <ApsimToSim>
+         <component name="[metdaily.name]" executable="[dll]" class="MetDaily">
+            <executable name="%apsim%/Model/MetDaily.dll" version="1.0"/>
+            <initdata>
+               [Model]      
+               [metdaily.innerxml]   
+               [Children]
+            </initdata>
+         </component>
+      </ApsimToSim>
+   </MetaData>
+   <Model>
+      <MetDaily/>
+   </Model>
+</Type>

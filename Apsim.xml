@@ -106,6 +106,7 @@
     <PlugIn enabled="yes">%apsim%/Model/Manager.xml</PlugIn>
     <PlugIn enabled="yes">%apsim%/Model/Map.xml</PlugIn>
     <PlugIn enabled="yes">%apsim%/Model/Memo.xml</PlugIn>
+    <PlugIn enabled="yes">%apsim%/Model/MetDaily.xml</PlugIn>
     <PlugIn enabled="yes">%apsim%/Model/MetFile.xml</PlugIn>
     <PlugIn enabled="yes">%apsim%/Model/MicroMet.xml</PlugIn>
     <PlugIn enabled="yes">%apsim%/Model/Millet.xml</PlugIn>
@@ -349,6 +350,7 @@
     <component>sysbal</component>
     <component>patchinput</component>
     <component>manager2</component>
+    <component>metdaily</component>
     <component>ddrules</component>
     <component>Plant</component>
     <component>TextOutput</component>
