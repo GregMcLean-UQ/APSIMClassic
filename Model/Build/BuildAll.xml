@@ -286,6 +286,14 @@
          <WorkingDirectory>%APSIM%/Model/Map</WorkingDirectory>
          <CommandLine>make</CommandLine>
       </Job>
+      <Job name="Compile MetDaily">
+         <DependsOn>Compile CSGeneral</DependsOn>
+         <DependsOn>Compile CSDotNetComponentInterface</DependsOn>
+         <DependsOn>Compile CMPServices</DependsOn>
+         <DependsOn>Compile DotNetProxies</DependsOn>
+         <WorkingDirectory>%APSIM%/Model/MetDaily</WorkingDirectory>
+         <CommandLine>make</CommandLine>
+      </Job>
       <Job name="Compile MicroClimate">
          <DependsOn>Compile CSGeneral</DependsOn>
          <DependsOn>Compile CSDotNetComponentInterface</DependsOn>
@@ -321,13 +329,13 @@
          <WorkingDirectory>%APSIM%/Model/Oryza</WorkingDirectory>
          <CommandLine>make</CommandLine>
       </Job>
-      <Job name="Compile Cotton">
+      <!-- <Job name="Compile Cotton">
          <DependsOn>Compile CMPServices</DependsOn>
          <DependsOn>Compile CSGeneral</DependsOn>
          <WorkingDirectory>%APSIM%/Model/Cotton</WorkingDirectory>
          <CommandLine>make</CommandLine>
          <CommandLineUnix>make -f Makefile.unix</CommandLineUnix>
-      </Job>
+      </Job> -->
       <Job name="Compile Parasite">
          <DependsOn>Compile FortranInfrastructure</DependsOn>
          <DependsOn>Compile FortranComponentInterface</DependsOn>
