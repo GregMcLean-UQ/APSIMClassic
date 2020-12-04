@@ -3,6 +3,7 @@ using System.IO;
 using ModelFramework;
 
 using DCAPST;
+using DCAPST.Environment;
 using DCAPST.Interfaces;
 using DCAPST.Utilities;
 
@@ -132,9 +133,46 @@ public class Script
         MyPaddock.Get("SWAvailable", out SWAvailable);
         MyPaddock.Get("lai", out lai);
 
-        // Model the photosynthesis
+        var SG = new SolarGeometry
+        {
+            Latitude = latitude.ToRadians(),
+            DayOfYear = DOY
+        };
+
+        ITemperature tempModel;
+        ISolarRadiation radiationModel;
         double rpar = 0.5;
-        DCAPSTModel DM = Classic.SetUpModel(CP, PP, DOY, latitude, maxT, minT, radn, rpar);
+
+        double[] hourlyMet;
+        var hourlyPresent = MyPaddock.Get("tempHour", out hourlyMet);
+        if (hourlyPresent)
+        {
+            double[] hourlyRadn;
+            MyPaddock.Get("radnHour", out hourlyRadn);
+            tempModel = new HourlyTemperature(hourlyMet);
+            radiationModel = new HourlyRadiation(SG)
+            {
+                HourlyRadiations = hourlyRadn,
+                RPAR = rpar
+            };
+        }
+        else
+        {
+            tempModel = new Temperature(SG)
+            {
+                MinTemperature = minT,
+                MaxTemperature = maxT
+            };
+
+            radiationModel = new SolarRadiation(SG)
+            {
+                Daily = radn,
+                RPAR = rpar
+            };
+        }
+
+        // Model the photosynthesis
+        DCAPSTModel DM = Classic.SetUpModel(CP, PP, SG, tempModel, radiationModel);
 
         // Optional values 
         DM.PrintIntervalValues = false; // Switch to print extra data (default = false)

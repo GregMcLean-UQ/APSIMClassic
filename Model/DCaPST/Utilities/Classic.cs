@@ -182,35 +182,11 @@ namespace DCAPST.Utilities
         public static DCAPSTModel SetUpModel(
             ICanopyParameters CP, 
             IPathwayParameters PP,
-            int DOY, 
-            double latitude, 
-            double maxT, 
-            double minT, 
-            double radn,
-            double rpar)
+            ISolarGeometry SG,
+            ITemperature TM,
+            ISolarRadiation SR
+            )
         {
-            // Model the solar geometry
-            var SG = new SolarGeometry
-            {
-                Latitude = latitude.ToRadians(),
-                DayOfYear = DOY
-            };
-
-            // Model the solar radiation
-            var SR = new SolarRadiation(SG)
-            {
-                Daily = radn,
-                RPAR = rpar
-            };
-
-            // Model the environmental temperature
-            var TM = new Temperature(SG)
-            {
-                MaxTemperature = maxT,
-                MinTemperature = minT,
-                AtmosphericPressure = 1.01325
-            };            
-
             // Model the pathways
             var SunlitAc1 = new AssimilationPathway(CP, PP);
             var SunlitAc2 = new AssimilationPathway(CP, PP);
