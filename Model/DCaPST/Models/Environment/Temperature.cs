@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using DCAPST.Interfaces;
 
 namespace DCAPST.Environment
@@ -186,6 +188,20 @@ namespace DCAPST.Environment
             if (timeIndex < 0 || timeIndex > 23) throw new Exception("The time must be between 0 and 23");
 
             AirTemperature = HourlyTemperatures[timeIndex];
+
+            if(HourlyTemperatures.Length > 0)
+            {
+                var minValue = HourlyTemperatures[0];
+                var maxValue = HourlyTemperatures[0];
+                for (var i = 1; i < HourlyTemperatures.Length; ++i)
+                {
+                    minValue = Math.Min(minValue, HourlyTemperatures[i]);
+                    maxValue = Math.Max(maxValue, HourlyTemperatures[i]);
+                }
+
+                MinTemperature = minValue;
+                MaxTemperature = maxValue;
+            }
         }
     }
 
