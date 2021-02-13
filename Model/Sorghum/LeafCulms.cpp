@@ -374,38 +374,28 @@ void LeafCulms::AddInitialTillers()
 }
 void LeafCulms::addTiller(double leafAtAppearance, double currentLeaf, double fractionToAdd)
 {
-	double fraction = 1;
-	if (calculatedTillers - tillersAdded < 1)
-		fraction = calculatedTillers - tillersAdded;
+	//Add a fraction of a tiller every day - can be 1 for initial addition of tillers
 
-	// get number if tillers 
-	// add fractionToAdd 
-	// if new tiller is neded add one
-	// fraction goes to proportions
+	double actualFractionToAdd = Min(fractionToAdd, calculatedTillers - tillersAdded);
 	double nCulms = Culms.size();
 	double tillerFraction = Culms[(int)nCulms - 1]->getProportion();
-	//tillerFraction +=fractionToAdd;
-	fraction = tillerFraction + fractionToAdd - floor(tillerFraction);
-	//a new tiller is created with each new leaf, up the number of fertileTillers
-	if (tillerFraction + fractionToAdd > 1)
+	if (tillerFraction > 1.0) throw new exception("Tiller fraction cannot be > 1");
+	tillersAdded += actualFractionToAdd;
+
+	if (tillerFraction + actualFractionToAdd > 1)
 	{
+		//update the last tiller to be 1 and add new tiller
+		Culms[(int)nCulms - 1]->setProportion(1.0);
+		actualFractionToAdd = (tillerFraction + actualFractionToAdd - 1.0);
+
 		Culm* newCulm = new Culm(scienceAPI, plant, leafAtAppearance);
 		newCulm->readParams();
 
-		//bell curve distribution is adjusted horizontally by moving the curve to the left.
-		//This will cause the first leaf to have the same value as the nth leaf on the main culm.
-		//T3&T4 were defined during dicussion at initial tillering meeting 27/06/12
-		//all others are an assumption
-		//T2 = 3 Leaves
-		//T3 = 4 Leaves
-		//T4 = 5 leaves
-		//T5 = 6 leaves
-		//T6 = 7 leaves
 		newCulm->setCulmNo(Culms.size());
-		newCulm->setCurrentLeafNo(0);//currentLeaf);
+		newCulm->setCurrentLeafNo(0);
 		verticalAdjustment = aMaxVert + (tillersAdded * aTillerVert);
 		newCulm->setVertLeafAdj(verticalAdjustment);
-		newCulm->setProportion(fraction);
+		newCulm->setProportion(actualFractionToAdd);
 		newCulm->calcFinalLeafNo();
 		newCulm->calcLeafAppearance();
 		newCulm->calculateLeafSizes();
@@ -413,9 +403,8 @@ void LeafCulms::addTiller(double leafAtAppearance, double currentLeaf, double fr
 	}
 	else
 	{
-		Culms[(int)nCulms - 1]->setProportion(fraction);
+		Culms[(int)nCulms - 1]->setProportion(tillerFraction + actualFractionToAdd);
 	}
-	tillersAdded += fractionToAdd;
 
 }
 void LeafCulms::calcTillerAppearance(int newLeafNo, int currentLeafNo)
@@ -435,7 +424,7 @@ void LeafCulms::calcTillerAppearance(int newLeafNo, int currentLeafNo)
 		//bool newTiller = newLeaf && newLeafNo >= 6 && linearLAI < maxLAIForTillering; 
 		bool newTiller = newLeafNo >= 6 && linearLAI < maxLAIForTillering;
 		double fractionToAdd = plant->phenology->getDltTT() / appearanceRate1;
-		fractionToAdd = 0.2;
+		// fractionToAdd = 0.2;
 		if (newTiller)
 		{
 			addTiller(currentLeafNo, currentLeafNo - 1, fractionToAdd);
