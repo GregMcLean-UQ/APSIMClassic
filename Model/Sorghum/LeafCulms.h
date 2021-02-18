@@ -81,6 +81,7 @@ namespace Sorghum {
 
 			void calculateLeafSizes();
 			void setCulmNo(int _culmNo){culmNo = _culmNo;}
+			int getCulmNo() { return culmNo; }
 			double getAreaOfCurrentLeaf(double leaves);
 
 			double getTotalLAI(){return totalLAI;}
@@ -129,7 +130,9 @@ namespace Sorghum {
 			virtual void calcTillerAppearance(int newLeafNo, int currentLeafNo);
 			void calcTillerNumber(int newLeafNo, int currentLeafNo);
 			void AddInitialTillers();
-			void addTiller(double leafAtAppearance, double Leaves, double fractionToAdd);
+			void LeafCulms::initiateTiller(double tillerNumber, double fractionToAdd);
+
+			void addTillerProportion(double leafAtAppearance, double fractionToAdd);
 			virtual void reduceTillers(double reduceLAI);
 
 			void getLeafSizesMain(vector<float> &result);
