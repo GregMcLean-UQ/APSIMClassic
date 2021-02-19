@@ -65,7 +65,7 @@ namespace Sorghum {
 			virtual void updateVars(void);
 			virtual void doRegistrations(void);
 
-			void calcFinalLeafNo(void);
+			void calcFinalLeafNo();
 			double getCurrentLeafNo(void);
 			void setCurrentLeafNo(const double& val);
 			double getFinalLeafNo(void);
@@ -130,14 +130,19 @@ namespace Sorghum {
 			virtual void calcTillerAppearance(int newLeafNo, int currentLeafNo);
 			void calcTillerNumber(int newLeafNo, int currentLeafNo);
 			void AddInitialTillers();
-			void LeafCulms::initiateTiller(double tillerNumber, double fractionToAdd);
+			void LeafCulms::initiateTiller(int tillerNumber, double fractionToAdd);
 
 			void addTillerProportion(double leafAtAppearance, double fractionToAdd);
 			virtual void reduceTillers(double reduceLAI);
 
 			void getLeafSizesMain(vector<float> &result);
-			void getLeafSizesTiller(vector<float> &result);
+			void getLeafSizesTiller1(vector<float> &result);
+			void getLeafSizesTiller2(vector<float>& result);
+			void getLeafSizesTiller3(vector<float>& result);
+			void getLeafSizesTiller4(vector<float>& result);
+			void LeafCulms::LeafApp(vector<float>& result);
 
+			vector<double> leafAppearance;
 		};
 
 	class LeafCulms_Fixed : public LeafCulms

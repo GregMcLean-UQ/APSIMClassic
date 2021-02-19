@@ -82,13 +82,16 @@ void LeafCulms::readParams(void)
 //------------------------------------------------------------------------------------------------
 void LeafCulms::updateVars(void)
 {
+	leafAppearance.clear();
 	tillers = 0.0;
 	for (int i = 0; i < (int)Culms.size(); ++i)
 	{
 		Culms[i]->updateVars();
 		tillers += Culms[i]->getProportion();
+		leafAppearance.push_back(Culms[i]->getCurrentLeafNo());
 	}
 	tillers--;
+	Culms[0]->getCurrentLeafNo();
 	Leaf::updateVars();
 }
 
@@ -108,10 +111,26 @@ void LeafCulms::doRegistrations(void)
 
 	scienceAPI.exposeFunction("LeafSizesMain", "mm2", "Size of each leaf on the main culm",
 		FloatArrayFunction(&LeafCulms::getLeafSizesMain));
-	scienceAPI.exposeFunction("LeafSizesTiller", "mm2", "Size of each leaf on the main culm",
-		FloatArrayFunction(&LeafCulms::getLeafSizesTiller));
+	scienceAPI.exposeFunction("LeafSizesTiller1", "mm2", "Size of each leaf on T1",
+		FloatArrayFunction(&LeafCulms::getLeafSizesTiller1));
+	scienceAPI.exposeFunction("LeafSizesTiller2", "mm2", "Size of each leaf on T1",
+		FloatArrayFunction(&LeafCulms::getLeafSizesTiller2));
+	scienceAPI.exposeFunction("LeafSizesTiller3", "mm2", "Size of each leaf on T1",
+		FloatArrayFunction(&LeafCulms::getLeafSizesTiller3));
+	scienceAPI.exposeFunction("LeafSizesTiller4", "mm2", "Size of each leaf on T1",
+		FloatArrayFunction(&LeafCulms::getLeafSizesTiller4));
+	scienceAPI.exposeFunction("LeafApp", "()", "Number of leaves on each culm",
+		FloatArrayFunction(&LeafCulms::LeafApp));
+
 
 }
+
+void LeafCulms::LeafApp(vector<float>& result)
+	{
+	
+	DVecToFVec(result, leafAppearance);
+	}
+
 
 void LeafCulms::reduceTillers(double reduceLAI)
 {
@@ -357,7 +376,7 @@ void LeafCulms::AddInitialTillers()
 	//This will cause the first leaf to have the same value as the nth leaf on the main culm.
 
 }
-void LeafCulms::initiateTiller(double tillerNumber, double fractionToAdd)
+void LeafCulms::initiateTiller(int tillerNumber, double fractionToAdd)
 	{
 	double leafNoAtAppearance = 1.0;							// DEBUG  parameter?
 	double nTillersPresent = Culms.size() - 1;
@@ -423,9 +442,8 @@ void LeafCulms::getLeafSizesMain(vector<float> &result)
 	DVecToFVec(result, Culms[0]->leafSizes);
 }
 
-void LeafCulms::getLeafSizesTiller(vector<float> &result)
+void LeafCulms::getLeafSizesTiller1(vector<float> &result)
 {
-
 	if (Culms.size() > 1)
 	{
 		DVecToFVec(result, Culms[1]->leafSizes);
@@ -435,6 +453,39 @@ void LeafCulms::getLeafSizesTiller(vector<float> &result)
 		DVecToFVec(result, vector<double>());
 	}
 }
+void LeafCulms::getLeafSizesTiller2(vector<float>& result)
+	{
+	if (Culms.size() > 2)
+		{
+		DVecToFVec(result, Culms[2]->leafSizes);
+		}
+	else
+		{
+		DVecToFVec(result, vector<double>());
+		}
+	}
+void LeafCulms::getLeafSizesTiller3(vector<float>& result)
+	{
+	if (Culms.size() > 3)
+		{
+		DVecToFVec(result, Culms[3]->leafSizes);
+		}
+	else
+		{
+		DVecToFVec(result, vector<double>());
+		}
+	}
+void LeafCulms::getLeafSizesTiller4(vector<float>& result)
+	{
+	if (Culms.size() > 4)
+		{
+		DVecToFVec(result, Culms[4]->leafSizes);
+		}
+	else
+		{
+		DVecToFVec(result, vector<double>());
+		}
+	}
 
 //------------------------------------------------------------------------------------------------
 //------ LeafCulms_Fixed
@@ -667,11 +718,17 @@ void Culm::doRegistrations(void)
 	scienceAPI.expose("CurrentLeaf", "", "Current Leaf", false, currentLeafNo);
 }
 
-void Culm::calcFinalLeafNo(void)
+void Culm::calcFinalLeafNo()
 {
 	double ttFi = plant->phenology->sumTTtarget(emergence, fi);
-	finalLeafNo = bound(divide(ttFi, initRate) + noSeed, minLeafNo, maxLeafNo);
-}
+	double mainCulmFLN = bound(divide(ttFi, initRate) + noSeed, minLeafNo, maxLeafNo);
+
+	if (culmNo == 0)
+		finalLeafNo = mainCulmFLN;
+	else
+		finalLeafNo = mainCulmFLN - (5 + culmNo - 2);
+
+	}
 
 void Culm::setVertLeafAdj(double adj) { vertAdjValue = adj; }
 void Culm::setProportion(double val) { proportion = val; }
