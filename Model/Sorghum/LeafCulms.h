@@ -30,6 +30,7 @@ namespace Sorghum {
 			double largestLeafPlateau;
 
 			double finalLeafNo;
+			double lastLeafNumber;
 			double dltLeafNo;
 			double currentLeafNo;
 			double finalLeafCorrection;
@@ -68,6 +69,8 @@ namespace Sorghum {
 			void calcFinalLeafNo();
 			double getCurrentLeafNo(void);
 			void setCurrentLeafNo(const double& val);
+			double getlastLeafNumber() { return lastLeafNumber; }
+			void setLastLeafNo(double _leafNo) { lastLeafNumber = _leafNo; }
 			double getFinalLeafNo(void);
 			double calcLeafAppearance(void);
 			double getLeafAppearanceRate(double);
@@ -130,16 +133,16 @@ namespace Sorghum {
 			virtual void calcTillerAppearance(int newLeafNo, int currentLeafNo);
 			void calcTillerNumber(int newLeafNo, int currentLeafNo);
 			void AddInitialTillers();
-			void LeafCulms::initiateTiller(int tillerNumber, double fractionToAdd);
+			void LeafCulms::initiateTiller(int tillerNumber, double fractionToAdd, double initialLeaves);
 
 			void addTillerProportion(double leafAtAppearance, double fractionToAdd);
 			virtual void reduceTillers(double reduceLAI);
 
 			void getLeafSizesMain(vector<float> &result);
-			void getLeafSizesTiller1(vector<float> &result);
-			void getLeafSizesTiller2(vector<float>& result);
+			void getLeafSizesTiller2(vector<float> &result);
 			void getLeafSizesTiller3(vector<float>& result);
 			void getLeafSizesTiller4(vector<float>& result);
+			void getLeafSizesTiller5(vector<float>& result);
 			void LeafCulms::LeafApp(vector<float>& result);
 
 			vector<double> leafAppearance;
