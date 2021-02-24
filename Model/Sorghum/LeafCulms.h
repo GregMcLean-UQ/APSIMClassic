@@ -38,6 +38,7 @@ namespace Sorghum {
 			double proportion;
 			double leafArea;//changes each day
 			double totalLAI;		// accumulated lai for this culm
+			double totalArea;	// total area of the culm
 
 			double noSeed;
 			//double noEmergence;
@@ -48,21 +49,21 @@ namespace Sorghum {
 			double appearanceRate1;
 			double appearanceRate2;
 			double noRateChange;
-			double minLeafNo,maxLeafNo;
+			double minLeafNo, maxLeafNo;
 			int culmNo;
 
 			// plant
 			double density;
-		public :
+		public:
 			vector<double> leafSizes;
 
 			// public Methods -------------------------------------------------------
 		public:
-			Culm(ScienceAPI2 &, Plant *p, double leafNoAtApp);
+			Culm(ScienceAPI2&, Plant* p, double leafNoAtApp);
 			~Culm();
 
 			virtual void initialize(void);
-			virtual void readParams (void);
+			virtual void readParams(void);
 			virtual void updateVars(void);
 			virtual void doRegistrations(void);
 
@@ -70,6 +71,8 @@ namespace Sorghum {
 			double getCurrentLeafNo(void);
 			void setCurrentLeafNo(const double& val);
 			double getlastLeafNumber() { return lastLeafNumber; }
+			double gettotalArea() { return totalArea; }
+
 			void setLastLeafNo(double _leafNo) { lastLeafNumber = _leafNo; }
 			double getFinalLeafNo(void);
 			double calcLeafAppearance(void);
@@ -80,14 +83,14 @@ namespace Sorghum {
 			void setProportion(double proportion);
 			double getLeafArea();
 			void setFinalLeafCorrection(double finalLeafCorrection);
-			double getProportion(){return proportion;}
+			double getProportion() { return proportion; }
 
 			void calculateLeafSizes();
-			void setCulmNo(int _culmNo){culmNo = _culmNo;}
+			void setCulmNo(int _culmNo) { culmNo = _culmNo; }
 			int getCulmNo() { return culmNo; }
 			double getAreaOfCurrentLeaf(double leaves);
 
-			double getTotalLAI(){return totalLAI;}
+			double getTotalLAI() { return totalLAI; }
 
 		};
 
@@ -118,17 +121,17 @@ namespace Sorghum {
 			double linearLAI;
 			// public Methods -------------------------------------------------------
 		public:
-			LeafCulms(ScienceAPI2 &, Plant *p);
+			LeafCulms(ScienceAPI2&, Plant* p);
 			virtual ~LeafCulms();
 
 			virtual void  initialize(void);
-			virtual void  readParams (void);
+			virtual void  readParams(void);
 			virtual void  updateVars(void);
 			virtual void  doRegistrations(void);
 
 			virtual void calcLeafNo(void);
 			virtual void calcPotentialArea(void);
-			virtual void  areaActual(void);
+			virtual void areaActual(void);
 
 			virtual void calcTillerAppearance(int newLeafNo, int currentLeafNo);
 			void calcTillerNumber(int newLeafNo, int currentLeafNo);
@@ -138,14 +141,16 @@ namespace Sorghum {
 			void addTillerProportion(double leafAtAppearance, double fractionToAdd);
 			virtual void reduceTillers(double reduceLAI);
 
-			void getLeafSizesMain(vector<float> &result);
-			void getLeafSizesTiller2(vector<float> &result);
+			void getLeafSizesMain(vector<float>& result);
+			void getLeafSizesTiller2(vector<float>& result);
 			void getLeafSizesTiller3(vector<float>& result);
 			void getLeafSizesTiller4(vector<float>& result);
 			void getLeafSizesTiller5(vector<float>& result);
 			void LeafCulms::LeafApp(vector<float>& result);
+			void LeafCulms::CulmArea(vector<float>& result);
 
 			vector<double> leafAppearance;
+			vector<double> culmArea;
 		};
 
 	class LeafCulms_Fixed : public LeafCulms
@@ -155,10 +160,10 @@ namespace Sorghum {
 
 			// public Methods -------------------------------------------------------
 		public:
-			LeafCulms_Fixed(ScienceAPI2 &, Plant *p);
+			LeafCulms_Fixed(ScienceAPI2&, Plant* p);
 			virtual ~LeafCulms_Fixed();
 
-			virtual void readParams (void);
+			virtual void readParams(void);
 			virtual void calcLeafNo(void);
 			virtual void calcTillerAppearance(int newLeafNo, int currentLeafNo);
 			virtual void areaActual(void);

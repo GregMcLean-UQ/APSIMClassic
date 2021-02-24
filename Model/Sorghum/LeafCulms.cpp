@@ -41,6 +41,7 @@ LeafCulms::~LeafCulms()
 	while (!Culms.empty())
 		delete Culms.back(), Culms.pop_back();
 	}
+
 void LeafCulms::initialize()
 	{
 	//initialize shouldn't be called once sown
@@ -83,12 +84,14 @@ void LeafCulms::readParams(void)
 void LeafCulms::updateVars(void)
 	{
 	leafAppearance.clear();
+	culmArea.clear();
 	tillers = 0.0;
 	for (int i = 0; i < (int)Culms.size(); ++i)
 		{
 		Culms[i]->updateVars();
 		tillers += Culms[i]->getProportion();
 		leafAppearance.push_back(Culms[i]->getCurrentLeafNo());
+		culmArea.push_back(Culms[i]->gettotalArea());
 		}
 	tillers--;
 	Culms[0]->getCurrentLeafNo();
@@ -121,9 +124,18 @@ void LeafCulms::doRegistrations(void)
 		FloatArrayFunction(&LeafCulms::getLeafSizesTiller5));
 	scienceAPI.exposeFunction("LeafApp", "()", "Number of leaves on each culm",
 		FloatArrayFunction(&LeafCulms::LeafApp));
+	scienceAPI.exposeFunction("CulmArea", "()", "Leaf Area on each culm",
+		FloatArrayFunction(&LeafCulms::CulmArea));
 
 
 	}
+void LeafCulms::CulmArea(vector<float>& result)
+	{
+
+	DVecToFVec(result, culmArea);
+	}
+
+
 
 void LeafCulms::LeafApp(vector<float>& result)
 	{
@@ -165,15 +177,11 @@ void LeafCulms::calcPotentialArea(void)
 	dltPotentialLAI = 0.0;
 	dltStressedLAI = 0.0;
 
-	if (stage >= emergence && stage <= flag)
+	if (stage >= emergence)// && stage <= flag)
 		{
 		for (int i = 0; i < (int)Culms.size(); ++i)
 			{
-			// Don't grow any leaf if the last leaf is fully grown
-			if (Culms[i]->getCurrentLeafNo() < Culms[i]->getFinalLeafNo() - 2 + Culms[i]->getCulmNo())
-				{
-				dltPotentialLAI += Culms[i]->calcPotentialLeafArea();
-				}
+			dltPotentialLAI += Culms[i]->calcPotentialLeafArea();
 			dltStressedLAI = calcStressedLeafArea();		// dltPotentialLAI * totalStress(0-1)
 
 			}
@@ -307,6 +315,7 @@ void LeafCulms::calcLeafNo(void)
 			}
 		}
 	}
+
 void LeafCulms::calcTillerNumber(int newLeafNo, int currentLeafNo)
 	{
 	//need to calculate the average R/oCd per day during leaf 5 expansion
@@ -377,6 +386,7 @@ void LeafCulms::AddInitialTillers()
 	//This will cause the first leaf to have the same value as the nth leaf on the main culm.
 
 	}
+
 void LeafCulms::initiateTiller(int tillerNumber, double fractionToAdd, double initialLeaf)
 	{
 	double leafNoAtAppearance = 1.0;							// DEBUG  parameter?
@@ -414,6 +424,7 @@ void LeafCulms::addTillerProportion(double leafAtAppearance, double fractionToAd
 		}
 
 	}
+
 void LeafCulms::calcTillerAppearance(int newLeafNo, int currentLeafNo)
 	{
 	//if there are still more tillers to add
@@ -437,6 +448,7 @@ void LeafCulms::calcTillerAppearance(int newLeafNo, int currentLeafNo)
 			}
 		}
 	}
+
 void LeafCulms::getLeafSizesMain(vector<float>& result)
 	{
 
@@ -671,6 +683,8 @@ void Culm::initialize(void)
 	aMaxS = 19.5;
 	totalLAI = 0.0;
 	culmNo = 0;
+	leafArea = 0;
+	totalArea = 0;
 
 	//readParams();
 	}
@@ -783,6 +797,7 @@ double Culm::calcPotentialLeafArea(void)
 	double leafsize = calcIndividualLeafSize(leafNoEffective);
 	//leafArea = getAreaOfCurrentLeaf(leafNoEffective);		HACK
 	//leafArea *= proportion; //proportion is 1 unless this tiller is a fraction ie: Fertile Tiller Number is 2.2, then 1 tiller is 0.2
+	totalArea += leafsize * dltLeafNo;
 	leafArea = leafsize * smm2sm * density * dltLeafNo; // in dltLai
 	totalLAI += leafArea;
 	return (leafArea * proportion);
